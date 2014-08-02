@@ -22,7 +22,7 @@ app.set('views', __dirname + '/server-templates');
 var partials = "./server-templates/partials/";
 fs.readdirSync(partials).forEach(function (file) {
   var source = fs.readFileSync(partials + file, "utf8"),
-      partial = /(.+)\.html/.exec(file).pop();
+      partial = /(.+)\.html/.exec(file).pop(); //finds an array of results, hence .pop
 
   Handlebars.registerPartial(partial, source);
 });
