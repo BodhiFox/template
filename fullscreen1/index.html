@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+<p>Hello World</p>
+
+<div class="btn-group">
+  <button onclick= "launchFullscreen(document.documentElement);" type="button" class="btn btn-default">launch fullscreen</button>
+  
+  <button  onclick="exitFullscreen();" type="button" class="btn btn-default">exit fullscreen</button>
+</div>
+
+<script type="text/javascript">
+// Find the right method, call on correct element
+function launchFullscreen(element) {
+  if(element.requestFullscreen) {
+    element.requestFullscreen();
+  } else if(element.mozRequestFullScreen) {
+    element.mozRequestFullScreen();
+  } else if(element.webkitRequestFullscreen) {
+    element.webkitRequestFullscreen();
+  } else if(element.msRequestFullscreen) {
+    element.msRequestFullscreen();
+  }
+}
+</script>
+
+<!-- Launch fullscreen for browsers that support it!
+launchFullScreen(document.documentElement); // the whole page
+launchFullScreen(document.getElementById("videoElement")); // any individual element -->
+
+<script type= "text/javascript">
+// Whack fullscreen
+function exitFullscreen() {
+  if(document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if(document.mozCancelFullScreen) {
+    document.mozCancelFullScreen();
+  } else if(document.webkitExitFullscreen) {
+    document.webkitExitFullscreen();
+  }
+}
+</script>
+
+<!-- Cancel fullscreen for browsers that support it!
+exitFullscreen(); -->
+
+
+</body>
+</html>
