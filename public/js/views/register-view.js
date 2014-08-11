@@ -4,7 +4,7 @@ Backbone.$ = $;
 var registerTemplate = require('../../templates/register.hbs');
 
 var RegisterView = Backbone.View.extend({
-
+// needs a render function!
   el: '.login_fields',
     events: {
       'click #addUser': 'addUser'

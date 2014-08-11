@@ -34,12 +34,8 @@ app.get('/', function (req, res) {
   res.render('./index.html');
 });
 
-app.get('/login', function (req, res) {
-  res.render('./login.html');
-});
-
-app.get('/register', function (req, res) {
-  res.render('./register.html');
+app.get('/api/users/', function (req, res) {
+  console.log("here's a api/user call");
 });
 
 //db.deleteCollection('bb-todos');

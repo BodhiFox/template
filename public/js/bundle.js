@@ -12628,7 +12628,8 @@ var Backbone = require('backbone');
 var User = require('../models/user');
 var Users = Backbone.Collection.extend({
   model: User,
-    url: '/api/users',
+    url: '/api/users', //can specify a url here, like /api/users
+                       // then have server.js serve up db info
     comparator: 'creationDate'
 });
 
@@ -12684,12 +12685,10 @@ $(function () {
 var $ = require('jquery');
 var Backbone = require('backbone');
 Backbone.$ = $;
-var loginTemplate = require('../../templates/login.hbs');
 
+var loginTemplate = require('../../templates/login.hbs');
 var RegisterView = require('./register-view.js');
-
 var loginTemplate = require('../../templates/login.hbs');
-
 var Users = require('../collections/users');
 
 var LoginView = Backbone.View.extend({
@@ -12702,7 +12701,7 @@ var LoginView = Backbone.View.extend({
     },
     render: function () {
       var loginView = new LoginView({collection: this.collection});
-      loginView.render();
+      //loginView.render(); //hey look, recursion! oops.
       $('#projector').html(loginView.$el);
 
       var registerView = new RegisterView({collection: this.collection});
@@ -12756,7 +12755,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<h1>Login page</h1>\n<div id=\"login_fields\">\n  <div id=\"username\">\n    <label for=\"user\">Username: </label>\n    <input type=\"text\" id=\"user\" />\n  </div>\n  <div id=\"password\">\n    <label for=\"pass\">Password: </label>\n    <input type=\"text\" id=\"pass\" />\n  </div>\n</div>\n<button id=\"login\" class=\"btn btn-success\">Login</button>\n<a id=\"register\" href=\"../register\">Register new user</a>\n";
+  return "<h1>Handlebars Login page</h1>\n<div id=\"login_fields\">\n  <div id=\"username\">\n    <label for=\"user\">Username: </label>\n    <input type=\"text\" id=\"user\" />\n  </div>\n  <div id=\"password\">\n    <label for=\"pass\">Password: </label>\n    <input type=\"text\" id=\"pass\" />\n  </div>\n</div>\n<button id=\"login\" class=\"btn btn-success\">Login</button>\n<a id=\"register\" href=\"../register\">Register new user</a>\n";
   });
 
 },{"hbsfy/runtime":9}],18:[function(require,module,exports){
@@ -12768,7 +12767,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<h1>Register new user</h1>\n<div id=\"register_fields\">\n  <div id=\"username\">\n    <label for=\"user\">Username: </label>\n    <input type=\"text\" id=\"user\" />\n  </div>\n  <div id=\"email_address\">\n    <label for=\"email\">Email: </label>\n    <input type=\"text\" id=\"email\" />\n  </div>\n  <div id=\"password\">\n    <label for=\"pass\">Password: </label>\n    <input type=\"password\" id=\"pass\" />\n  </div>\n  <div id=\"verify_password\">\n    <label for=\"verify\">Password (again): </label>\n    <input type=\"password\" id=\"verify\" />\n  </div>\n</div>\n<button id=\"submit\" class=\"btn btn-success\">Submit</button>\n";
+  return "<h1>Handlebars Register new user</h1>\n<div id=\"register_fields\">\n  <div id=\"username\">\n    <label for=\"user\">Username: </label>\n    <input type=\"text\" id=\"user\" />\n  </div>\n  <div id=\"email_address\">\n    <label for=\"email\">Email: </label>\n    <input type=\"text\" id=\"email\" />\n  </div>\n  <div id=\"password\">\n    <label for=\"pass\">Password: </label>\n    <input type=\"password\" id=\"pass\" />\n  </div>\n  <div id=\"verify_password\">\n    <label for=\"verify\">Password (again): </label>\n    <input type=\"password\" id=\"verify\" />\n  </div>\n</div>\n<button id=\"submit\" class=\"btn btn-success\">Submit</button>\n";
   });
 
 },{"hbsfy/runtime":9}]},{},[14]);

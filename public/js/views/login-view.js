@@ -17,7 +17,7 @@ var LoginView = Backbone.View.extend({
     },
     render: function () {
       var loginView = new LoginView({collection: this.collection});
-      loginView.render();
+      //loginView.render(); //hey look, recursion! oops.
       $('#projector').html(loginView.$el);
 
       var registerView = new RegisterView({collection: this.collection});
