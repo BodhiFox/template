@@ -5,9 +5,17 @@ var registerTemplate = require('../../templates/register.hbs');
 
 var RegisterView = Backbone.View.extend({
 // needs a render function!
-  el: '.login_fields',
+  el: '#projector',
     events: {
       'click #addUser': 'addUser'
+    },
+    initialize: function () {
+      window.userCollection = this.collection;
+      this.collection.fetch();
+      $(this.el).html(loginTemplate);
+    },
+    render: function () {
+      this.$el.html(registerTemplate);
     },
     addUser: function () {
       var $userName = $(this.el).find('#user');
@@ -20,6 +28,7 @@ var RegisterView = Backbone.View.extend({
     password: passwordInput,
     creationDate: Date.now()
       };
+      console.log(collectionFromInput);
       this.collection.create( collectionFromInput, {wait: true}); // was validate: true
       $userName.val('');
       $password.val('');

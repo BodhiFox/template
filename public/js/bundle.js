@@ -12686,13 +12686,17 @@ var $ = require('jquery');
 var Backbone = require('backbone');
 Backbone.$ = $;
 
-var loginTemplate = require('../../templates/login.hbs');
+//var loginTemplate = require('../../templates/login.hbs');
 var RegisterView = require('./register-view.js');
 var loginTemplate = require('../../templates/login.hbs');
 var Users = require('../collections/users');
 
 var LoginView = Backbone.View.extend({
   el: '#projector',
+    events: {
+      'click #login': 'login',
+    'click #register': 'register'
+    },
     collection: new Users(),
     initialize: function () {
       window.userCollection = this.collection;
@@ -12700,14 +12704,16 @@ var LoginView = Backbone.View.extend({
       $(this.el).html(loginTemplate);
     },
     render: function () {
-      var loginView = new LoginView({collection: this.collection});
-      //loginView.render(); //hey look, recursion! oops.
-      $('#projector').html(loginView.$el);
-
-      var registerView = new RegisterView({collection: this.collection});
-
+      this.$el.html(loginTemplate);
+    },
+    login: function () {
+      alert('login attempt!');
+    },
+    register: function () {
+      alert('registration attempt!');
+      this.registerView = new RegisterView();
+      this.registerView.render();
     }
-
 });
 
 module.exports = LoginView;
@@ -12719,10 +12725,18 @@ Backbone.$ = $;
 var registerTemplate = require('../../templates/register.hbs');
 
 var RegisterView = Backbone.View.extend({
-
-  el: '.login_fields',
+// needs a render function!
+  el: '#projector',
     events: {
       'click #addUser': 'addUser'
+    },
+    initialize: function () {
+      window.userCollection = this.collection;
+      this.collection.fetch();
+      $(this.el).html(loginTemplate);
+    },
+    render: function () {
+      this.$el.html(registerTemplate);
     },
     addUser: function () {
       var $userName = $(this.el).find('#user');
@@ -12735,6 +12749,7 @@ var RegisterView = Backbone.View.extend({
     password: passwordInput,
     creationDate: Date.now()
       };
+      console.log(collectionFromInput);
       this.collection.create( collectionFromInput, {wait: true}); // was validate: true
       $userName.val('');
       $password.val('');
@@ -12755,7 +12770,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<h1>Handlebars Login page</h1>\n<div id=\"login_fields\">\n  <div id=\"username\">\n    <label for=\"user\">Username: </label>\n    <input type=\"text\" id=\"user\" />\n  </div>\n  <div id=\"password\">\n    <label for=\"pass\">Password: </label>\n    <input type=\"text\" id=\"pass\" />\n  </div>\n</div>\n<button id=\"login\" class=\"btn btn-success\">Login</button>\n<a id=\"register\" href=\"../register\">Register new user</a>\n";
+  return "<h1>Handlebars Login page</h1>\n<div id=\"login_fields\">\n  <div id=\"username\">\n    <label for=\"user\">Username: </label>\n    <input type=\"text\" id=\"user\" />\n  </div>\n  <div id=\"password\">\n    <label for=\"pass\">Password: </label>\n    <input type=\"password\" id=\"pass\" />\n  </div>\n</div>\n<button id=\"login\" class=\"btn btn-success\">Login</button>\n<a id=\"register\" href=\"../register\">Register new user</a>\n";
   });
 
 },{"hbsfy/runtime":9}],18:[function(require,module,exports){
