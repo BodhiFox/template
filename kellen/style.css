@@ -1,0 +1,28 @@
+
+html {
+	background: #888;
+}
+body {
+	color: white;
+}
+
+.visible {
+	width: 500px;
+	height: 281px;
+	display: block;
+	margin: 0 auto;
+	border: 20px;
+	border-color
+	padding: 2px;
+}
+
+.hidden {
+	display: none;
+}
+
+
+
+
+
+
+
