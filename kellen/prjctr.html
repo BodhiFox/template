@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>PRJCTR</title>
+		<link rel="stylesheet" href="style.css">
+
+		<script type='text/javascript'src='https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js'></script>
+		<script type='text/javascript' src='PRJCTR-pull-pics.js'></script>
+		<script type='text/javascript' src='PRJCTR-state-machine.js'></script>
+		<script typt='css'
+
+		<script type='text/javascript'>
+			function tagSubmit () {
+				var input = document.getElementById('inputBox');
+				tag = input.value;
+
+				getPics();
+				slideshow();
+				return false;//prevents refresh on form submit
+			};
+		</script>
+
+	</head>
+	<body>
+		<form name="myform" id="eform" onsubmit = "return tagSubmit()">
+			Hashtag:	<input type="text" id="inputBox" name="hashtag">
+						<input type="submit" value="Search">
+		</form>
+
+		<div id="target"></div>
+
+
+	</body>
+</html>
+
