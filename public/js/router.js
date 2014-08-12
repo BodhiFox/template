@@ -8,7 +8,7 @@ var RegisterView = require('./views/register-view');
 var Router = Backbone.Router.extend({
   routes: {
     '': 'login',
-    '/register': 'register'
+    'register': 'register'
   },
     login: function () {
       this.loginView = new LoginView();
@@ -16,6 +16,7 @@ var Router = Backbone.Router.extend({
     },
     register: function () {
       this.registerView = new RegisterView();
+      console.log('check check');
       this.registerView.render();
     }
 });

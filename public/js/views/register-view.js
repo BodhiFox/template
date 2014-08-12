@@ -4,7 +4,6 @@ Backbone.$ = $;
 var registerTemplate = require('../../templates/register.hbs');
 
 var RegisterView = Backbone.View.extend({
-// needs a render function!
   el: '#projector',
     events: {
       'click #addUser': 'addUser'
@@ -12,10 +11,10 @@ var RegisterView = Backbone.View.extend({
     initialize: function () {
       window.userCollection = this.collection;
       this.collection.fetch();
-      $(this.el).html(loginTemplate);
+      $(this.el).html(registerTemplate);
     },
     render: function () {
-      this.$el.html(registerTemplate);
+      this.$el.html(registerTemplate());
     },
     addUser: function () {
       var $userName = $(this.el).find('#user');

@@ -12664,7 +12664,7 @@ var RegisterView = require('./views/register-view');
 var Router = Backbone.Router.extend({
   routes: {
     '': 'login',
-    '/register': 'register'
+    'register': 'register'
   },
     login: function () {
       this.loginView = new LoginView();
@@ -12672,6 +12672,7 @@ var Router = Backbone.Router.extend({
     },
     register: function () {
       this.registerView = new RegisterView();
+      console.log('check check');
       this.registerView.render();
     }
 });
@@ -12685,10 +12686,9 @@ $(function () {
 var $ = require('jquery');
 var Backbone = require('backbone');
 Backbone.$ = $;
-
-//var loginTemplate = require('../../templates/login.hbs');
-var RegisterView = require('./register-view.js');
 var loginTemplate = require('../../templates/login.hbs');
+
+var RegisterView = require('./register-view.js');
 var Users = require('../collections/users');
 
 var LoginView = Backbone.View.extend({
@@ -12711,7 +12711,7 @@ var LoginView = Backbone.View.extend({
     },
     register: function () {
       alert('registration attempt!');
-      this.registerView = new RegisterView();
+      this.registerView = new RegisterView({collection: this.collection});
       this.registerView.render();
     }
 });
@@ -12725,18 +12725,17 @@ Backbone.$ = $;
 var registerTemplate = require('../../templates/register.hbs');
 
 var RegisterView = Backbone.View.extend({
-// needs a render function!
   el: '#projector',
     events: {
       'click #addUser': 'addUser'
     },
-    initialize: function () {
-      window.userCollection = this.collection;
-      this.collection.fetch();
-      $(this.el).html(loginTemplate);
-    },
+    //initialize: function () {
+      //window.userCollection = this.collection;
+      //this.collection.fetch();
+      //$(this.el).html(registerTemplate);
+    //},
     render: function () {
-      this.$el.html(registerTemplate);
+      this.$el.html(registerTemplate());
     },
     addUser: function () {
       var $userName = $(this.el).find('#user');
@@ -12770,7 +12769,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<h1>Handlebars Login page</h1>\n<div id=\"login_fields\">\n  <div id=\"username\">\n    <label for=\"user\">Username: </label>\n    <input type=\"text\" id=\"user\" />\n  </div>\n  <div id=\"password\">\n    <label for=\"pass\">Password: </label>\n    <input type=\"password\" id=\"pass\" />\n  </div>\n</div>\n<button id=\"login\" class=\"btn btn-success\">Login</button>\n<a id=\"register\" href=\"../register\">Register new user</a>\n";
+  return "<h1>Handlebars Login page</h1>\n<div id=\"login_fields\">\n  <div id=\"username\">\n    <label for=\"user\">Username: </label>\n    <input type=\"text\" id=\"user\" />\n  </div>\n  <div id=\"password\">\n    <label for=\"pass\">Password: </label>\n    <input type=\"password\" id=\"pass\" />\n  </div>\n</div>\n<button id=\"login\" class=\"btn btn-success\">Login</button>\n<a id=\"register\" href=\"/#/register\">Register new user</a>\n";
   });
 
 },{"hbsfy/runtime":9}],18:[function(require,module,exports){
