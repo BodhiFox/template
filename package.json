@@ -13,7 +13,9 @@
     "jquery": "^2.1.1",
     "morgan": "^1.1.1",
     "orchestrate": "^0.2.0",
-    "underscore": "^1.6.0"
+    "underscore": "^1.6.0",
+    "passport": "",
+    "passport-local": ""
   },
   "devDependencies": {},
   "scripts": {

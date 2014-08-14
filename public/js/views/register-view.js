@@ -12,20 +12,20 @@ var RegisterView = Backbone.View.extend({
       this.$el.html(registerTemplate());
     },
     addUser: function () {
-      var $userName = $(this.el).find('#user');
-      var $password = $(this.el).find('#pass');
+      var $username = $(this.el).find('#username');
+      var $password = $(this.el).find('#password');
 
-      var userNameInput = $userName.val();
+      var usernameInput = $username.val();
       var passwordInput = $password.val();
       var collectionFromInput = {
-        name: userNameInput,
+        username: usernameInput,
     password: passwordInput,
     creationDate: Date.now()
       };
       alert(collectionFromInput.name + ' ' + collectionFromInput.password);
       console.log(collectionFromInput);
       this.collection.create( collectionFromInput, {wait: true}); // was validate: true
-      $userName.val('');
+      $username.val('');
       $password.val('');
       console.log(this.collection);
     },

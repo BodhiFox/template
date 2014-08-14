@@ -12781,20 +12781,20 @@ var RegisterView = Backbone.View.extend({
       this.$el.html(registerTemplate());
     },
     addUser: function () {
-      var $userName = $(this.el).find('#user');
-      var $password = $(this.el).find('#pass');
+      var $username = $(this.el).find('#username');
+      var $password = $(this.el).find('#password');
 
-      var userNameInput = $userName.val();
+      var usernameInput = $username.val();
       var passwordInput = $password.val();
       var collectionFromInput = {
-        name: userNameInput,
+        username: usernameInput,
     password: passwordInput,
     creationDate: Date.now()
       };
       alert(collectionFromInput.name + ' ' + collectionFromInput.password);
       console.log(collectionFromInput);
       this.collection.create( collectionFromInput, {wait: true}); // was validate: true
-      $userName.val('');
+      $username.val('');
       $password.val('');
       console.log(this.collection);
     },
@@ -12825,7 +12825,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<h1>Handlebars Login page</h1>\n<div id=\"login_fields\">\n  <div id=\"username\">\n    <label for=\"user\">Username: </label>\n    <input type=\"text\" id=\"user\" />\n  </div>\n  <div id=\"password\">\n    <label for=\"pass\">Password: </label>\n    <input type=\"password\" id=\"pass\" />\n  </div>\n</div>\n<button id=\"login\" class=\"btn btn-success\">Login</button>\n<a id=\"register\" href=\"/#/register\">Register new user</a>\n";
+  return "<h1>Handlebars Login page</h1>\n<div id=\"login_fields\">\n  <form action=\"/api/login\" method=\"post\">\n    <div id=\"username\">\n      <label for=\"user\">Username: </label>\n      <input type=\"text\" id=\"user\" />\n    </div>\n    <div id=\"password\">\n      <label for=\"pass\">Password: </label>\n      <input type=\"password\" id=\"pass\" />\n    </div>\n    <input type=\"submit\" value=\"Log In\" id=\"login\" class=\"btn btn-success\"/>\n  </form>\n</div>\n<a id=\"register\" href=\"/#/register\">Register new user</a>\n";
   });
 
 },{"hbsfy/runtime":9}],21:[function(require,module,exports){
@@ -12837,7 +12837,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<h1>Handlebars Register new user</h1>\n<div id=\"register_fields\">\n  <div id=\"username\">\n    <label for=\"user\">Username: </label>\n    <input type=\"text\" id=\"user\" />\n  </div>\n  <div id=\"email_address\">\n    <label for=\"email\">Email: </label>\n    <input type=\"text\" id=\"email\" />\n  </div>\n  <div id=\"password\">\n    <label for=\"pass\">Password: </label>\n    <input type=\"password\" id=\"pass\" />\n  </div>\n  <div id=\"verify_password\">\n    <label for=\"verify\">Password (again): </label>\n    <input type=\"password\" id=\"verify\" />\n  </div>\n</div>\n<button id=\"addUser\" class=\"btn btn-success\">Submit</button>\n";
+  return "<h1>Handlebars Register new user</h1>\n<div id=\"register_fields\">\n  <form action=\"/api/register\" method=\"post\">\n    <div id=\"user\">\n      <label for=\"username\">Username: </label>\n      <input type=\"text\" id=\"username\" />\n    </div>\n    <div id=\"email_address\">\n      <label for=\"email\">Email: </label>\n      <input type=\"text\" id=\"email\" />\n    </div>\n    <div id=\"pass\">\n      <label for=\"password\">Password: </label>\n      <input type=\"password\" id=\"password\" />\n    </div>\n    <div id=\"verify_password\">\n      <label for=\"verify\">Password (again): </label>\n      <input type=\"password\" id=\"verify\" />\n    </div>\n  <input type=\"submit\" value=\"Register\" id=\"addUser\" class=\"btn btn-success\"/>\n  </form>\n</div>\n";
   });
 
 },{"hbsfy/runtime":9}]},{},[14]);

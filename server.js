@@ -7,7 +7,8 @@ var config = require('./config.js');
 var consolidate = require('consolidate');
 var Handlebars = require('handlebars');
 var auth = require('./auth.js');
-
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
 var db = require('orchestrate')(config.dbKey);
 
 var app = express();
@@ -28,6 +29,22 @@ fs.readdirSync(partials).forEach(function (file) {
 Handlebars.registerPartial(partial, source);
 });
 
+// passport configuration
+passport.use(new LocalStrategy(
+  function(username, password, done) {
+    User.findOne({ username: username }, function(err, user) {
+      if (err) { return done(err); }
+      if (!user) {
+        return done(null, false, { message: 'Incorrect username.' });
+      }
+      if (!user.validPassword(password)) {
+        return done(null, false, { message: 'Incorrect password.' });
+      }
+      return done(null, user);
+    });
+  }
+));
+
 // express routes
 
 app.get('/', function (req, res) {
@@ -40,6 +57,16 @@ app.get('/', function (req, res) {
 
 app.get('/api/users/', function (req, res) {
   console.log("here's a api/user call");
+});
+
+app.post('/api/login/', function (req, res) {
+  passport.authenticate('local', { successRedirect: '/',
+    failureRedirect: '/login',
+    failureFlash: true })
+});
+
+app.post('/api/register/', function (req, res) {
+  console.log("Registration info sent to server!");
 });
 
 //db.deleteCollection('bb-todos');
