@@ -5,21 +5,12 @@
 		<title>PRJCTR</title>
 		<link rel="stylesheet" href="style.css">
 
-		<script type='text/javascript'src='https://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js'></script>
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+		<script src="http://malsup.github.com/jquery.cycle2.js"></script>
 		<script type='text/javascript' src='PRJCTR-pull-pics.js'></script>
 		<script type='text/javascript' src='PRJCTR-state-machine.js'></script>
-		<script typt='css'
-
-		<script type='text/javascript'>
-			function tagSubmit () {
-				var input = document.getElementById('inputBox');
-				tag = input.value;
-
-				getPics();
-				slideshow();
-				return false;//prevents refresh on form submit
-			};
-		</script>
+		
+		<script type='text/javascript' tagSubmit()></script>
 
 	</head>
 	<body>
@@ -28,7 +19,11 @@
 						<input type="submit" value="Search">
 		</form>
 
-		<div id="target"></div>
+		<div class="cycle-slideshow"
+			data-cycle-fx="scrollHorz"
+			data-cycle-speed="200"
+    	>
+    </div>
 
 
 	</body>
