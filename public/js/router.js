@@ -2,22 +2,15 @@ var $ = require('jquery');
 var Backbone = require('backbone');
 Backbone.$ = $;
 
-var LoginView = require('./views/login-view');
-var RegisterView = require('./views/register-view');
+var MainView = require('./views/main-view');
 // routes let the client respond to paths instead of just ids (#)
 var Router = Backbone.Router.extend({
   routes: {
-    '': 'login',
-    'register': 'register'
+    '': 'main',
   },
-    login: function () {
-      this.loginView = new LoginView();
-      this.loginView.render();
-    },
-    register: function () {
-      this.registerView = new RegisterView();
-      console.log('check check');
-      this.registerView.render();
+    main: function () {
+      this.mainView = new MainView();
+      this.mainView.render();
     }
 });
 // This starts the entire Backbone system going

@@ -12658,22 +12658,15 @@ var $ = require('jquery');
 var Backbone = require('backbone');
 Backbone.$ = $;
 
-var LoginView = require('./views/login-view');
-var RegisterView = require('./views/register-view');
+var MainView = require('./views/main-view');
 // routes let the client respond to paths instead of just ids (#)
 var Router = Backbone.Router.extend({
   routes: {
-    '': 'login',
-    'register': 'register'
+    '': 'main',
   },
-    login: function () {
-      this.loginView = new LoginView();
-      this.loginView.render();
-    },
-    register: function () {
-      this.registerView = new RegisterView();
-      console.log('check check');
-      this.registerView.render();
+    main: function () {
+      this.mainView = new MainView();
+      this.mainView.render();
     }
 });
 // This starts the entire Backbone system going
@@ -12682,7 +12675,7 @@ $(function () {
   Backbone.history.start();
 });
 
-},{"./views/login-view":15,"./views/register-view":16,"backbone":1,"jquery":10}],15:[function(require,module,exports){
+},{"./views/main-view":17,"backbone":1,"jquery":10}],15:[function(require,module,exports){
 var $ = require('jquery');
 var Backbone = require('backbone');
 Backbone.$ = $;
@@ -12696,12 +12689,6 @@ var LoginView = Backbone.View.extend({
     events: {
       'click #login': 'login',
     'click #register': 'register'
-    },
-    collection: new Users(),
-    initialize: function () {
-      window.userCollection = this.collection;
-      this.collection.fetch();
-      $(this.el).html(loginTemplate);
     },
     render: function () {
       this.$el.html(loginTemplate);
@@ -12718,7 +12705,42 @@ var LoginView = Backbone.View.extend({
 
 module.exports = LoginView;
 
-},{"../../templates/login.hbs":17,"../collections/users":12,"./register-view.js":16,"backbone":1,"jquery":10}],16:[function(require,module,exports){
+},{"../../templates/login.hbs":19,"../collections/users":12,"./register-view.js":18,"backbone":1,"jquery":10}],16:[function(require,module,exports){
+module.exports=require(15)
+},{"../../templates/login.hbs":19,"../collections/users":12,"./register-view.js":18,"backbone":1,"jquery":10}],17:[function(require,module,exports){
+var $ = require('jquery');
+var Backbone = require('backbone');
+Backbone.$ = $;
+var loginTemplate = require('../../templates/login.hbs');
+
+var RegisterView = require('./register-view.js');
+var LoginView = require('./login-view.js');
+var DisplayView = require('./display-view.js');
+var Users = require('../collections/users');
+
+var MainView = Backbone.View.extend({
+  el: '#projector',
+    events: {
+      'click #login': 'login',
+    'click #register': 'register'
+    },
+    collection: new Users(),
+    initialize: function () {
+      window.userCollection = this.collection;
+      this.collection.fetch();
+    },
+    render: function () {
+      // if logged in, display, else login
+      var loginView = new LoginView({collection: this.collection});
+      var registerView = new RegisterView({collection: this.collection});
+      var displayView = new DisplayView({collection: this.collection});
+      loginView.render();
+    },
+});
+
+module.exports = MainView;
+
+},{"../../templates/login.hbs":19,"../collections/users":12,"./display-view.js":15,"./login-view.js":16,"./register-view.js":18,"backbone":1,"jquery":10}],18:[function(require,module,exports){
 var $ = require('jquery');
 var Backbone = require('backbone');
 Backbone.$ = $;
@@ -12729,11 +12751,11 @@ var RegisterView = Backbone.View.extend({
     events: {
       'click #addUser': 'addUser'
     },
-    //initialize: function () {
-      //window.userCollection = this.collection;
-      //this.collection.fetch();
-      //$(this.el).html(registerTemplate);
-    //},
+    initialize: function () {
+      window.userCollection = this.collection;
+      this.collection.fetch();
+      $(this.el).html(registerTemplate);
+    },
     render: function () {
       this.$el.html(registerTemplate());
     },
@@ -12760,7 +12782,7 @@ var RegisterView = Backbone.View.extend({
 
 module.exports = RegisterView;
 
-},{"../../templates/register.hbs":18,"backbone":1,"jquery":10}],17:[function(require,module,exports){
+},{"../../templates/register.hbs":20,"backbone":1,"jquery":10}],19:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var Handlebars = require('hbsfy/runtime');
 module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
@@ -12772,7 +12794,7 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   return "<h1>Handlebars Login page</h1>\n<div id=\"login_fields\">\n  <div id=\"username\">\n    <label for=\"user\">Username: </label>\n    <input type=\"text\" id=\"user\" />\n  </div>\n  <div id=\"password\">\n    <label for=\"pass\">Password: </label>\n    <input type=\"password\" id=\"pass\" />\n  </div>\n</div>\n<button id=\"login\" class=\"btn btn-success\">Login</button>\n<a id=\"register\" href=\"/#/register\">Register new user</a>\n";
   });
 
-},{"hbsfy/runtime":9}],18:[function(require,module,exports){
+},{"hbsfy/runtime":9}],20:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var Handlebars = require('hbsfy/runtime');
 module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
