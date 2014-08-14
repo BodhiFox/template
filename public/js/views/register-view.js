@@ -8,11 +8,6 @@ var RegisterView = Backbone.View.extend({
     events: {
       'click #addUser': 'addUser'
     },
-    initialize: function () {
-      window.userCollection = this.collection;
-      this.collection.fetch();
-      $(this.el).html(registerTemplate);
-    },
     render: function () {
       this.$el.html(registerTemplate());
     },
@@ -27,6 +22,7 @@ var RegisterView = Backbone.View.extend({
     password: passwordInput,
     creationDate: Date.now()
       };
+      alert(collectionFromInput.name + ' ' + collectionFromInput.password);
       console.log(collectionFromInput);
       this.collection.create( collectionFromInput, {wait: true}); // was validate: true
       $userName.val('');

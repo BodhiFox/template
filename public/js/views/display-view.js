@@ -1,28 +1,23 @@
 var $ = require('jquery');
 var Backbone = require('backbone');
 Backbone.$ = $;
-var loginTemplate = require('../../templates/login.hbs');
+var displayTemplate = require('../../templates/display.hbs');
 
-var RegisterView = require('./register-view.js');
-var Users = require('../collections/users');
-
-var LoginView = Backbone.View.extend({
+var DisplayView = Backbone.View.extend({
   el: '#projector',
     events: {
-      'click #login': 'login',
-    'click #register': 'register'
+      'click #fullscreen': 'fullscreen',
+    'click #play': 'play;'
     },
     render: function () {
-      this.$el.html(loginTemplate);
+      this.$el.html(displayTemplate);
     },
-    login: function () {
-      alert('login attempt!');
+    fullscreen: function () {
+      alert('fullscreen attempt!');
     },
-    register: function () {
-      alert('registration attempt!');
-      this.registerView = new RegisterView({collection: this.collection});
-      this.registerView.render();
+    play: function () {
+      alert('play attempt!');
     }
 });
 
-module.exports = LoginView;
+module.exports = DisplayView;

@@ -10,7 +10,7 @@ var LoginView = Backbone.View.extend({
   el: '#projector',
     events: {
       'click #login': 'login',
-    'click #register': 'register'
+    //'click #register': 'register'
     },
     render: function () {
       this.$el.html(loginTemplate);
@@ -18,8 +18,9 @@ var LoginView = Backbone.View.extend({
     login: function () {
       alert('login attempt!');
     },
+    // this is showing up in bundle twice
     register: function () {
-      alert('registration attempt!');
+      alert('registration attempt!  really, why is this firing?');
       this.registerView = new RegisterView({collection: this.collection});
       this.registerView.render();
     }

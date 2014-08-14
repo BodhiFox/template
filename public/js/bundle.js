@@ -12659,14 +12659,20 @@ var Backbone = require('backbone');
 Backbone.$ = $;
 
 var MainView = require('./views/main-view');
+var RegisterView = require('./views/register-view');
 // routes let the client respond to paths instead of just ids (#)
 var Router = Backbone.Router.extend({
   routes: {
     '': 'main',
+    'register': 'register'
   },
     main: function () {
       this.mainView = new MainView();
       this.mainView.render();
+    },
+    register: function () {
+      this.registerView = new RegisterView();
+      this.registerView.render();
     }
 });
 // This starts the entire Backbone system going
@@ -12675,7 +12681,32 @@ $(function () {
   Backbone.history.start();
 });
 
-},{"./views/main-view":17,"backbone":1,"jquery":10}],15:[function(require,module,exports){
+},{"./views/main-view":17,"./views/register-view":18,"backbone":1,"jquery":10}],15:[function(require,module,exports){
+var $ = require('jquery');
+var Backbone = require('backbone');
+Backbone.$ = $;
+var displayTemplate = require('../../templates/display.hbs');
+
+var DisplayView = Backbone.View.extend({
+  el: '#projector',
+    events: {
+      'click #fullscreen': 'fullscreen',
+    'click #play': 'play;'
+    },
+    render: function () {
+      this.$el.html(displayTemplate);
+    },
+    fullscreen: function () {
+      alert('fullscreen attempt!');
+    },
+    play: function () {
+      alert('play attempt!');
+    }
+});
+
+module.exports = DisplayView;
+
+},{"../../templates/display.hbs":19,"backbone":1,"jquery":10}],16:[function(require,module,exports){
 var $ = require('jquery');
 var Backbone = require('backbone');
 Backbone.$ = $;
@@ -12688,7 +12719,7 @@ var LoginView = Backbone.View.extend({
   el: '#projector',
     events: {
       'click #login': 'login',
-    'click #register': 'register'
+    //'click #register': 'register'
     },
     render: function () {
       this.$el.html(loginTemplate);
@@ -12696,8 +12727,9 @@ var LoginView = Backbone.View.extend({
     login: function () {
       alert('login attempt!');
     },
+    // this is showing up in bundle twice
     register: function () {
-      alert('registration attempt!');
+      alert('registration attempt!  really, why is this firing?');
       this.registerView = new RegisterView({collection: this.collection});
       this.registerView.render();
     }
@@ -12705,9 +12737,7 @@ var LoginView = Backbone.View.extend({
 
 module.exports = LoginView;
 
-},{"../../templates/login.hbs":19,"../collections/users":12,"./register-view.js":18,"backbone":1,"jquery":10}],16:[function(require,module,exports){
-module.exports=require(15)
-},{"../../templates/login.hbs":19,"../collections/users":12,"./register-view.js":18,"backbone":1,"jquery":10}],17:[function(require,module,exports){
+},{"../../templates/login.hbs":20,"../collections/users":12,"./register-view.js":18,"backbone":1,"jquery":10}],17:[function(require,module,exports){
 var $ = require('jquery');
 var Backbone = require('backbone');
 Backbone.$ = $;
@@ -12720,10 +12750,6 @@ var Users = require('../collections/users');
 
 var MainView = Backbone.View.extend({
   el: '#projector',
-    events: {
-      'click #login': 'login',
-    'click #register': 'register'
-    },
     collection: new Users(),
     initialize: function () {
       window.userCollection = this.collection;
@@ -12731,8 +12757,8 @@ var MainView = Backbone.View.extend({
     },
     render: function () {
       // if logged in, display, else login
-      var loginView = new LoginView({collection: this.collection});
       var registerView = new RegisterView({collection: this.collection});
+      var loginView = new LoginView({collection: this.collection});
       var displayView = new DisplayView({collection: this.collection});
       loginView.render();
     },
@@ -12740,7 +12766,7 @@ var MainView = Backbone.View.extend({
 
 module.exports = MainView;
 
-},{"../../templates/login.hbs":19,"../collections/users":12,"./display-view.js":15,"./login-view.js":16,"./register-view.js":18,"backbone":1,"jquery":10}],18:[function(require,module,exports){
+},{"../../templates/login.hbs":20,"../collections/users":12,"./display-view.js":15,"./login-view.js":16,"./register-view.js":18,"backbone":1,"jquery":10}],18:[function(require,module,exports){
 var $ = require('jquery');
 var Backbone = require('backbone');
 Backbone.$ = $;
@@ -12750,11 +12776,6 @@ var RegisterView = Backbone.View.extend({
   el: '#projector',
     events: {
       'click #addUser': 'addUser'
-    },
-    initialize: function () {
-      window.userCollection = this.collection;
-      this.collection.fetch();
-      $(this.el).html(registerTemplate);
     },
     render: function () {
       this.$el.html(registerTemplate());
@@ -12770,6 +12791,7 @@ var RegisterView = Backbone.View.extend({
     password: passwordInput,
     creationDate: Date.now()
       };
+      alert(collectionFromInput.name + ' ' + collectionFromInput.password);
       console.log(collectionFromInput);
       this.collection.create( collectionFromInput, {wait: true}); // was validate: true
       $userName.val('');
@@ -12782,16 +12804,16 @@ var RegisterView = Backbone.View.extend({
 
 module.exports = RegisterView;
 
-},{"../../templates/register.hbs":20,"backbone":1,"jquery":10}],19:[function(require,module,exports){
+},{"../../templates/register.hbs":21,"backbone":1,"jquery":10}],19:[function(require,module,exports){
 // hbsfy compiled Handlebars template
 var Handlebars = require('hbsfy/runtime');
 module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
   this.compilerInfo = [4,'>= 1.0.0'];
 helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
-  
+  var buffer = "";
 
 
-  return "<h1>Handlebars Login page</h1>\n<div id=\"login_fields\">\n  <div id=\"username\">\n    <label for=\"user\">Username: </label>\n    <input type=\"text\" id=\"user\" />\n  </div>\n  <div id=\"password\">\n    <label for=\"pass\">Password: </label>\n    <input type=\"password\" id=\"pass\" />\n  </div>\n</div>\n<button id=\"login\" class=\"btn btn-success\">Login</button>\n<a id=\"register\" href=\"/#/register\">Register new user</a>\n";
+  return buffer;
   });
 
 },{"hbsfy/runtime":9}],20:[function(require,module,exports){
@@ -12803,7 +12825,19 @@ helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
   
 
 
-  return "<h1>Handlebars Register new user</h1>\n<div id=\"register_fields\">\n  <div id=\"username\">\n    <label for=\"user\">Username: </label>\n    <input type=\"text\" id=\"user\" />\n  </div>\n  <div id=\"email_address\">\n    <label for=\"email\">Email: </label>\n    <input type=\"text\" id=\"email\" />\n  </div>\n  <div id=\"password\">\n    <label for=\"pass\">Password: </label>\n    <input type=\"password\" id=\"pass\" />\n  </div>\n  <div id=\"verify_password\">\n    <label for=\"verify\">Password (again): </label>\n    <input type=\"password\" id=\"verify\" />\n  </div>\n</div>\n<button id=\"submit\" class=\"btn btn-success\">Submit</button>\n";
+  return "<h1>Handlebars Login page</h1>\n<div id=\"login_fields\">\n  <div id=\"username\">\n    <label for=\"user\">Username: </label>\n    <input type=\"text\" id=\"user\" />\n  </div>\n  <div id=\"password\">\n    <label for=\"pass\">Password: </label>\n    <input type=\"password\" id=\"pass\" />\n  </div>\n</div>\n<button id=\"login\" class=\"btn btn-success\">Login</button>\n<a id=\"register\" href=\"/#/register\">Register new user</a>\n";
+  });
+
+},{"hbsfy/runtime":9}],21:[function(require,module,exports){
+// hbsfy compiled Handlebars template
+var Handlebars = require('hbsfy/runtime');
+module.exports = Handlebars.template(function (Handlebars,depth0,helpers,partials,data) {
+  this.compilerInfo = [4,'>= 1.0.0'];
+helpers = this.merge(helpers, Handlebars.helpers); data = data || {};
+  
+
+
+  return "<h1>Handlebars Register new user</h1>\n<div id=\"register_fields\">\n  <div id=\"username\">\n    <label for=\"user\">Username: </label>\n    <input type=\"text\" id=\"user\" />\n  </div>\n  <div id=\"email_address\">\n    <label for=\"email\">Email: </label>\n    <input type=\"text\" id=\"email\" />\n  </div>\n  <div id=\"password\">\n    <label for=\"pass\">Password: </label>\n    <input type=\"password\" id=\"pass\" />\n  </div>\n  <div id=\"verify_password\">\n    <label for=\"verify\">Password (again): </label>\n    <input type=\"password\" id=\"verify\" />\n  </div>\n</div>\n<button id=\"addUser\" class=\"btn btn-success\">Submit</button>\n";
   });
 
 },{"hbsfy/runtime":9}]},{},[14]);
